@@ -2,11 +2,15 @@ package main
 
 import (
 	"fmt"
-
-	"github.com/jobanmendpara/aoc23/internal/day1"
+	"github.com/jobanmendpara/aoc23/internal/day2"
 )
 
 func main() {
-  // day1.Solve2()
-	fmt.Println("Answer:", day1.Solve2())
+	fmt.Println("---START---")
+
+	sum, poweredSum := day2.Solve()
+
+	fmt.Println("Sum:", sum)
+	fmt.Println("PoweredSum:", poweredSum)
+	fmt.Println("---END---")
 }
