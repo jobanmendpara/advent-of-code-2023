@@ -7,7 +7,7 @@ import (
 	"regexp"
 	"strconv"
 
-	"github.com/jobanmendpara/aoc23/internal/helpers"
+	"github.com/jobanmendpara/advent-of-code-2023/internal/helpers"
 )
 
 func Solve1() int {

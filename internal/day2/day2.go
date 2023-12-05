@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/jobanmendpara/aoc23/internal/helpers"
+	"github.com/jobanmendpara/advent-of-code-2023/internal/helpers"
 )
 
 func Solve() (sum int, poweredSum float64) {

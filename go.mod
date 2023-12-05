@@ -1,3 +1,3 @@
-module github.com/jobanmendpara/aoc23
+module github.com/jobanmendpara/advent-of-code-2023
 
 go 1.21.4
