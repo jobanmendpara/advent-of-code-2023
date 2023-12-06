@@ -1,24 +1,18 @@
 package day1
 
 import (
-	"bufio"
 	"log"
-	"os"
 	"regexp"
 	"strconv"
 
 	"github.com/jobanmendpara/advent-of-code-2023/internal/helpers"
 )
 
-func Solve1() int {
-	var file *os.File = helpers.GetInput("internal/day1/input.txt")
+func Part1(inputFilePath string) (sum int) {
+	var lines []string = helpers.GetInput(inputFilePath)
 
-	var sum int = 0
-
-	scanner := bufio.NewScanner(file)
-
-	for scanner.Scan() {
-		justNums, err := stripNonNumeric(string(scanner.Text()))
+	for _, line := range lines {
+		justNums, err := stripNonNumeric(line)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -37,16 +31,10 @@ func Solve1() int {
 		sum += calibrationVal
 	}
 
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
-	}
-
-	defer file.Close()
-
 	return sum
 }
 
-func Solve2() int {
+func Part2(inputFilePath string) (sum int) {
 	var numWordMap = map[string]int{
 		"zero":  0,
 		"one":   1,
@@ -60,12 +48,9 @@ func Solve2() int {
 		"nine":  9,
 	}
 
-	var sum int = 0
-	var file *os.File = helpers.GetInput("internal/day1/input.txt")
-	var scanner *bufio.Scanner = bufio.NewScanner(file)
+	var lines []string = helpers.GetInput(inputFilePath)
 
-	for scanner.Scan() {
-		var line string = string(scanner.Text())
+	for _, line := range lines {
 		var numbersInLine string = ""
 
 		for i, rune := range line {
@@ -99,8 +84,6 @@ func Solve2() int {
 
 		sum += calibrationVal
 	}
-
-	defer file.Close()
 
 	return sum
 }

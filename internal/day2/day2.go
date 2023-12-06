@@ -1,10 +1,8 @@
 package day2
 
 import (
-	"bufio"
 	"log"
 	"math"
-	"os"
 	"strconv"
 	"strings"
 
@@ -16,22 +14,19 @@ func Solve() (sum int, poweredSum float64) {
 	const greenMax int = 13
 	const blueMax int = 14
 
-	var file *os.File = helpers.GetInput("internal/day2/input.txt")
+	var lines []string = helpers.GetInput("internal/day2/input.txt")
 
-	var scanner *bufio.Scanner = bufio.NewScanner(file)
-
-	for scanner.Scan() {
+  for _, game := range lines {
 		var redMinRequired float64 = 0
 		var greenMinRequired float64 = 0
 		var blueMinRequired float64 = 0
-		var game string = scanner.Text()
 		var gameId string
 		var rounds []string
 		var newString string
 		var isGamePossible bool = true
 		var gamePower float64 = 1
 
-		gameId, newString = getStringInBetween(game, "Game: ", ":")
+		gameId, newString = helpers.GetStringInBetween(game, "Game: ", ":")
 		rounds = strings.Split(newString, "; ")
 
 		for i := range rounds {
@@ -79,24 +74,7 @@ func Solve() (sum int, poweredSum float64) {
 
 		gamePower *= (redMinRequired * blueMinRequired * greenMinRequired)
 		poweredSum += gamePower
-	}
+  }
 
 	return sum, poweredSum
-}
-
-func getStringInBetween(input string, start string, end string) (result string, newString string) {
-	var startIndex = strings.Index(input, start) + len(start)
-	if startIndex == -1 {
-		return
-	}
-
-	var endIndex = strings.Index(input, end) + len(end) - 1
-	if endIndex == -1 {
-		return
-	}
-
-	result = input[startIndex:endIndex]
-	newString = input[endIndex+2:]
-
-	return result, newString
 }

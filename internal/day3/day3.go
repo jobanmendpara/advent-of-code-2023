@@ -14,7 +14,7 @@ type number struct {
 	num   int
 }
 
-func Solve1(path string) (sum int) {
+func Part1(path string) (sum int) {
 	var lines []string = helpers.GetInput(path)
 
 	for i, row := range getNumbers(lines) {
@@ -60,7 +60,7 @@ func Solve1(path string) (sum int) {
 	return sum
 }
 
-func Solve2(path string) (sum int) {
+func Part2(path string) (sum int) {
 	var lines []string = helpers.GetInput(path)
 
 	for i, line := range lines {

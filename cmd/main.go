@@ -3,16 +3,16 @@ package main
 import (
 	"fmt"
 
-	"github.com/jobanmendpara/advent-of-code-2023/internal/day3"
+	"github.com/jobanmendpara/advent-of-code-2023/internal/day4"
 )
 
 func main() {
+  var input string = "internal/day4/input.txt"
+
 	fmt.Println("---START---")
 
-  var part1 int = day3.Solve1("internal/day3/input.txt")
-  var part2 int = day3.Solve2("internal/day3/input.txt")
+	fmt.Println("Part1:", day4.Part1(input))
+	fmt.Println("Part2:", day4.Part2(input))
 
-	fmt.Println("Part1:", part1)
-	fmt.Println("Part2:", part2)
-	fmt.Println("---END---")
+  fmt.Println("---END---")
 }
