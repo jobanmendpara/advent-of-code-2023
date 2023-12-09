@@ -5,11 +5,23 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 )
 
-func IsNumber(r rune) bool {
-  return r >= '0' && r <= '9'
+func ConvertArrayStringToArrayUint(input []string) (array []uint64) {
+	for _, str := range input {
+		if len(str) > 0 {
+			number, err := strconv.ParseUint(str, 10, 64)
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			array = append(array, number)
+		}
+	}
+
+	return array
 }
 
 func GetStringInBetween(input string, start string, end string) (result string, newString string) {
@@ -40,12 +52,31 @@ func GetInput(inputFilePath string) (input []string) {
 		log.Fatal(err)
 	}
 
-  scanner := bufio.NewScanner(file)
-  scanner.Split(bufio.ScanLines)
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanLines)
 
-  for (scanner.Scan()) {
-    input = append(input, scanner.Text())
-  }
+	for scanner.Scan() {
+		input = append(input, scanner.Text())
+	}
 
 	return input
+}
+
+func FindMinimum(arr []uint64) (min uint64) {
+	if len(arr) == 0 {
+		return 0
+	}
+
+	min = arr[0]
+	for _, value := range arr {
+		if value < min {
+			min = value
+		}
+	}
+
+  return min
+}
+
+func IsNumber(r rune) bool {
+	return r >= '0' && r <= '9'
 }
