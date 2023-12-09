@@ -16,7 +16,7 @@ func Solve() (sum int, poweredSum float64) {
 
 	var lines []string = helpers.GetInput("internal/day2/input.txt")
 
-  for _, game := range lines {
+	for _, game := range lines {
 		var redMinRequired float64 = 0
 		var greenMinRequired float64 = 0
 		var blueMinRequired float64 = 0
@@ -74,7 +74,7 @@ func Solve() (sum int, poweredSum float64) {
 
 		gamePower *= (redMinRequired * blueMinRequired * greenMinRequired)
 		poweredSum += gamePower
-  }
+	}
 
 	return sum, poweredSum
 }

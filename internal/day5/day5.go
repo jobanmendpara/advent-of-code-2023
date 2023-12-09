@@ -1,87 +1,84 @@
 package day5
 
 import (
+	"strconv"
 	"strings"
+	"unicode"
 
 	"github.com/jobanmendpara/advent-of-code-2023/internal/helpers"
 )
 
-type table map[uint64][]uint64
+type MapFilter struct {
+	filters []filter
+	chain   *MapFilter
+}
 
-func Part1(inputFilePath string) (lowestLocation uint64) {
-	var lines []string = helpers.GetInput(inputFilePath)
-	var locations []uint64
+type filter struct {
+	start int
+	end   int
+	diff  int
+}
 
-	seeds := helpers.ConvertArrayStringToArrayUint(strings.Split(lines[0][strings.Index(lines[0], ":")+1:], " "))
-	lines = lines[2:]
-
-	startingMap, remaining := getNextMap(lines)
+func Part1(path string) int {
+	input := helpers.GetInput(path)
+	mapFilters := buildFilters(input)
+	smallestNumber := int(^uint(0) >> 1)
+	startFilter := mapFilters[0]
+	seeds := strings.Fields(strings.Split(input[0], ":")[1])
 
 	for _, seed := range seeds {
-		location := travelMaps(uint64(seed), startingMap, remaining)
-
-		locations = append(locations, location)
+		seedInt, _ := strconv.Atoi(seed)
+		result := startFilter.Calculate(seedInt)
+		if result < smallestNumber {
+			smallestNumber = result
+		}
 	}
 
-	lowestLocation = helpers.FindMinimum(locations)
 
-	return lowestLocation
+	return smallestNumber
 }
 
-func Part2(inputFilePath string) (lowestLocation uint64) {
-	var _ []string = helpers.GetInput(inputFilePath)
+func (m *MapFilter) Calculate(input int) (output int) {
+	output = input
 
-	return lowestLocation
+	for _, filter := range m.filters {
+		if input >= filter.start && input <= filter.end {
+			output = input + filter.diff
+			break
+		}
+	}
+	if m.chain != nil {
+		output = m.chain.Calculate(output)
+	}
+
+	return output
 }
 
-func getNextMap(lines []string) (res table, newLines []string) {
-	res = make(table)
-	var count uint64
-
-	for i, line := range lines {
-		count++
-
-		if uint64(len(line)) < 1 {
-			newLines = lines[count:]
-			return res, newLines
-		} else if !helpers.IsNumber(rune(line[0])) {
+func buildFilters(input []string) (filters []*MapFilter) {
+	for i := 2; i < len(input)-1; i++ {
+		if len(input[i]) == 0 || input[i] == "" {
 			continue
+		}
+		if unicode.IsDigit(rune(input[i][0])) {
+			values := strings.Fields(input[i])
+			inputStart, _ := strconv.Atoi(values[1])
+			filterRange, _ := strconv.Atoi(values[2])
+			outputStart, _ := strconv.Atoi(values[0])
+
+			currentFilter := filters[len(filters)-1]
+			currentFilter.filters = append(currentFilter.filters, filter{
+				start: inputStart,
+				end:   inputStart + (filterRange - 1),
+				diff:  outputStart - inputStart,
+			})
 		} else {
-			res[uint64(i)] = helpers.ConvertArrayStringToArrayUint(strings.Split(line, " "))
+			newFilter := &MapFilter{}
+			if len(filters) > 0 {
+				filters[len(filters)-1].chain = newFilter
+			}
+			filters = append(filters, newFilter)
 		}
 	}
 
-	return res, newLines
-}
-
-func findLocation(input uint64, table table) (location uint64) {
-	for i, row := range table {
-		dest := row[0]
-		src := row[1]
-		rng := row[2]
-
-		if input >= src && input < src+rng {
-			location = dest + (input - src)
-
-			return location
-		} else if i == uint64(len(table)) {
-			location = input
-
-			return location
-		}
-	}
-
-	return location
-}
-
-func travelMaps(start uint64, table table, rows []string) (end uint64) {
-	if len(rows) < 1 {
-		end = start
-	} else {
-		nextStart := findLocation(start, table)
-		nextMap, remaining := getNextMap(rows)
-		end = travelMaps(nextStart, nextMap, remaining)
-	}
-
-	return end
+	return filters
 }
