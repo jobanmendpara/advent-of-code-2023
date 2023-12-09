@@ -3,16 +3,16 @@ package main
 import (
 	"fmt"
 
-	"github.com/jobanmendpara/advent-of-code-2023/internal/day4"
+	"github.com/jobanmendpara/advent-of-code-2023/internal/day5"
 )
 
 func main() {
-  var input string = "internal/day4/input.txt"
-
 	fmt.Println("---START---")
 
-	fmt.Println("Part1:", day4.Part1(input))
-	fmt.Println("Part2:", day4.Part2(input))
+  fmt.Println("Example - Pt1:", day5.Part1("internal/day5/example.txt"))
+  fmt.Println("Input - Pt1:", day5.Part1("internal/day5/input.txt"))
+	// fmt.Println("Example - Pt2:", day5.Part2(example))
+	// fmt.Println("Input - Pt2:", day5.Part2(input))
 
   fmt.Println("---END---")
 }

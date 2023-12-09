@@ -2,7 +2,6 @@ package day4
 
 import (
 	"fmt"
-	_ "fmt"
 	"log"
 	"strconv"
 	"strings"
@@ -26,8 +25,8 @@ func Part1(inputFilePath string) (sum int) {
 		var _, newString string = helpers.GetStringInBetween(game, "Card ", ":")
 		var isFirstMatch bool = true
 
-		myNumbers = convertArrayStringToArrayInt(strings.Split(strings.Split(newString, " | ")[0], " "))
-		winningNumbers = convertArrayStringToArrayInt(strings.Split(strings.Split(newString, " | ")[1], " "))
+		myNumbers = helpers.ConvertArrayStringToArrayInt(strings.Split(strings.Split(newString, " | ")[0], " "))
+		winningNumbers = helpers.ConvertArrayStringToArrayInt(strings.Split(strings.Split(newString, " | ")[1], " "))
 
 		for _, num := range myNumbers {
 			for _, winner := range winningNumbers {
@@ -104,19 +103,4 @@ func buildTable(input []string) (table map[int][]game) {
 	}
 
 	return table
-}
-
-func convertArrayStringToArrayInt(input []string) (array []int) {
-	for _, str := range input {
-		if len(str) > 0 {
-			number, err := strconv.Atoi(str)
-			if err != nil {
-				log.Fatal(err)
-			}
-
-			array = append(array, number)
-		}
-	}
-
-	return array
 }
