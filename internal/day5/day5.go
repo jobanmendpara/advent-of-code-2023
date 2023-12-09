@@ -34,6 +34,25 @@ func Part1(path string) int {
 		}
 	}
 
+	return smallestNumber
+}
+
+func Part2(path string) int {
+	input := helpers.GetInput(path)
+	mapFilters := buildFilters(input)
+	smallestNumber := int(^uint(0) >> 1)
+	startFilter := mapFilters[0]
+	seeds := buildSeeds(strings.Fields(strings.Split(input[0], ":")[1]))
+
+	for _, seed := range seeds {
+		seedInt, _ := strconv.Atoi(seed)
+		result := startFilter.Calculate(seedInt)
+		if result < smallestNumber {
+			smallestNumber = result
+		}
+	}
+
+
 
 	return smallestNumber
 }
@@ -81,4 +100,16 @@ func buildFilters(input []string) (filters []*MapFilter) {
 	}
 
 	return filters
+}
+
+func buildSeeds(input []string) (newSeeds []string) {
+	for i := 0; i < len(input); i += 2 {
+		seed, _ := strconv.Atoi(input[i])
+		diff, _ := strconv.Atoi(input[i+1])
+
+		for j := seed; j < seed+diff; j++ {
+			newSeeds = append(newSeeds, strconv.Itoa(j))
+		}
+	}
+	return newSeeds
 }

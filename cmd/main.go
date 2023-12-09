@@ -11,8 +11,8 @@ func main() {
 
   fmt.Println("Example - Pt1:", day5.Part1("internal/day5/example.txt"))
   fmt.Println("Actual - Pt1:", day5.Part1("internal/day5/input.txt"))
-	// fmt.Println("Example - Pt2:", day5.Part2(example))
-	// fmt.Println("Input - Pt2:", day5.Part2(input))
+	fmt.Println("Example - Pt2:", day5.Part2("internal/day5/example.txt"))
+	fmt.Println("Input - Pt2:", day5.Part2("internal/day5/input.txt"))
 
   fmt.Println("---END---")
 }
